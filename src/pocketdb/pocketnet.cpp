@@ -302,7 +302,6 @@ void FillLimits(const CChainParams &params)
     std::map<int, int64_t> _lottery_referral_depth;
     _lottery_referral_depth.insert({0, 30 * 24 * 3600});
     Limits.insert(std::make_pair(Limit::lottery_referral_depth, _lottery_referral_depth));
-
 };
 
 // Get actual limit for current height

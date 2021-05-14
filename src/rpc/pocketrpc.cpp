@@ -222,7 +222,6 @@ std::map<std::string, UniValue> getUsersProfiles(std::vector<std::string> addres
 
     return result;
 }
-//----------------------------------------------------------
 UniValue getPostData(reindexer::Item& itm, std::string address)
 {
     UniValue entry(UniValue::VOBJ);
