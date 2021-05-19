@@ -963,6 +963,7 @@ bool AppInitParameterInteraction()
 
     // ********************************************************* Step 2.1: Create and fill limits valus
     FillLimits(chainparams);
+
     FillCheckpointsBlocks(chainparams);
     FillCheckpointsTransactions(chainparams);
 
