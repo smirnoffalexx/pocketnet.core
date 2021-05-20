@@ -235,8 +235,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
-        consensus.nHeight_version_1_0_0_pre = 1021;
-        consensus.sVersion_1_0_0_pre_checkpoint = "98f21ba6e742c9a962a23428bad0b3cb8e4fd0ba9106bbcf7ea7772d58a97cc8";
+        consensus.nHeight_version_1_0_0_pre = 0;
+        consensus.sVersion_1_0_0_pre_checkpoint = "00000fd0f6633d395541056e8adc32961e15f8133674b2e3937c4d210ced6f3f";
         consensus.nHeight_version_1_0_0 = 0;
         consensus.nHeight_fix_ratings = 0;
 
