@@ -10,19 +10,19 @@
 
 #include <boost/test/unit_test.hpp>
 
-std::unique_ptr<CConnman> g_connman;
+std::unique_ptr<CConnman> g_connman_main;
 
 [[noreturn]] void Shutdown(void* parg)
 {
   std::exit(EXIT_SUCCESS);
 }
 
-[[noreturn]] void StartShutdown()
+[[noreturn]] void StartShutdown_main()
 {
   std::exit(EXIT_SUCCESS);
 }
 
-bool ShutdownRequested()
+bool ShutdownRequested_main()
 {
   return false;
 }

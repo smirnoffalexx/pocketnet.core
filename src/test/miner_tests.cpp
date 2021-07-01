@@ -248,7 +248,13 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
             pblock->nNonce = blockinfo[i].nonce;
         }
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
-        BOOST_CHECK(ProcessNewBlock(chainparams, shared_pblock, true));
+        
+        // Add for ProcessNewBlock
+        PocketHelpers::PocketBlock pocketBlock;
+        CValidationState stateDummy;
+        BOOST_CHECK(ProcessNewBlock(stateDummy, chainparams, shared_pblock, pocketBlock, true, true, nullptr));
+        
+        // BOOST_CHECK(ProcessNewBlock(chainparams, shared_pblock, true));
         pblock->hashPrevBlock = pblock->GetHash();
     }
 

@@ -149,6 +149,10 @@ TestChain100Setup::TestChain100Setup() : TestingSetup(CBaseChainParams::REGTEST)
 CBlock
 TestChain100Setup::CreateAndProcessBlock(const std::vector<CMutableTransaction>& txns, const CScript& scriptPubKey)
 {
+    // Add for ProcessNewBlock
+    PocketHelpers::PocketBlock pocketBlock;
+    CValidationState stateDummy;
+    
     const CChainParams& chainparams = Params();
     std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(chainparams).CreateNewBlock(scriptPubKey);
     CBlock& block = pblocktemplate->block;
@@ -167,7 +171,9 @@ TestChain100Setup::CreateAndProcessBlock(const std::vector<CMutableTransaction>&
     while (!CheckProofOfWork(block.GetHash(), block.nBits, chainparams.GetConsensus(), chainActive.Height())) ++block.nNonce;
 
     std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(block);
-    ProcessNewBlock(chainparams, shared_pblock, true);
+    
+    ProcessNewBlock(stateDummy, chainparams, shared_pblock, pocketBlock, true, true, nullptr);
+    // ProcessNewBlock(chainparams, shared_pblock, true);
 
     CBlock result = block;
     return result;

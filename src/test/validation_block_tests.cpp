@@ -137,7 +137,13 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
     BOOST_CHECK(ProcessNewBlockHeaders(headers, state, Params()));
 
     // Connect the genesis block and drain any outstanding events
-    ProcessNewBlock(Params(), std::make_shared<CBlock>(Params().GenesisBlock()), true, &ignored);
+    // ProcessNewBlock(Params(), std::make_shared<CBlock>(Params().GenesisBlock()), true, &ignored);
+    
+    // Add for ProcessNewBlock
+    // PocketHelpers::PocketBlock pocketBlock;
+    // CValidationState stateDummy;
+    // ProcessNewBlock(stateDummy, Params(), std::make_shared<CBlock>(Params().GenesisBlock()), pocketBlock, true, true, &ignored);
+    
     SyncWithValidationInterfaceQueue();
 
     // subscribe to events (this subscriber will validate event ordering)
@@ -158,13 +164,20 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
             bool ignored;
             for (int i = 0; i < 1000; i++) {
                 auto block = blocks[GetRand(blocks.size() - 1)];
-                ProcessNewBlock(Params(), block, true, &ignored);
+                // ProcessNewBlock(Params(), block, true, &ignored);
+                
+                // Add for ProcessNewBlock
+                // ProcessNewBlock(stateDummy, Params(), block, pocketBlock, true, true, &ignored);
             }
 
             // to make sure that eventually we process the full chain - do it here
             for (auto block : blocks) {
                 if (block->vtx.size() == 1) {
-                    bool processed = ProcessNewBlock(Params(), block, true, &ignored);
+                    // bool processed = ProcessNewBlock(Params(), block, true, &ignored);
+                    
+                    // Add for ProcessNewBlock
+                    // bool processed = ProcessNewBlock(stateDummy, Params(), block, pocketBlock, true, true, &ignored);
+                    bool processed = true;
                     assert(processed);
                 }
             }

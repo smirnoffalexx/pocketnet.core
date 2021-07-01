@@ -20,13 +20,16 @@ JSON_TEST_FILES = \
 
 RAW_TEST_FILES =
 
-GENERATED_TEST_FILES = $(JSON_TEST_FILES:.json=.json.h) $(RAW_TEST_FILES:.raw=.raw.h)
+GENERATED_TEST_FILES = $(JSON_TEST_FILES:.json=.json.h) $(RAW_TEST_FILES:.raw=.raw.h) 
 
 POCKETCOIN_TEST_SUITE = \
-  test/test_pocketcoin_main.cpp \
-  test/test_pocketcoin.h \
-  test/test_pocketcoin.cpp
-
+   test/test_pocketcoin_main.cpp \
+            test/test_pocketcoin.h \ 
+  test/test_pocketcoin.cpp # ----> ProcessNewBlock()
+################## test/blockfilter_tests.cpp \ ----> vprevout.emplace_back()
+################## test/coins_tests.cpp \ ----> 375 line
+################## test/miner_tests.cpp \ ----> ProcessNewBlock()
+################## test/validation_block_tests.cpp \ ----> ProcessNewBlock()
 # test_pocketcoin binary #
 POCKETCOIN_TESTS =\
   test/arith_uint256_tests.cpp \
@@ -41,12 +44,12 @@ POCKETCOIN_TESTS =\
   test/bip32_tests.cpp \
   test/blockchain_tests.cpp \
   test/blockencodings_tests.cpp \
-  test/blockfilter_tests.cpp \
-  test/bloom_tests.cpp \
+  		test/blockfilter_tests.cpp \
+                        test/bloom_tests.cpp \
   test/bswap_tests.cpp \
   test/checkqueue_tests.cpp \
-  test/coins_tests.cpp \
-  test/compress_tests.cpp \
+  		test/coins_tests.cpp \
+                      test/compress_tests.cpp \
   test/crypto_tests.cpp \
   test/cuckoocache_tests.cpp \
   test/denialofservice_tests.cpp \
@@ -61,8 +64,8 @@ POCKETCOIN_TESTS =\
   test/mempool_tests.cpp \
   test/merkle_tests.cpp \
   test/merkleblock_tests.cpp \
-  test/miner_tests.cpp \
-  test/multisig_tests.cpp \
+  	test/miner_tests.cpp \
+                       test/multisig_tests.cpp \
   test/net_tests.cpp \
   test/netbase_tests.cpp \
   test/pmt_tests.cpp \
@@ -93,8 +96,8 @@ POCKETCOIN_TESTS =\
   test/txvalidationcache_tests.cpp \
   test/uint256_tests.cpp \
   test/util_tests.cpp \
-  test/validation_block_tests.cpp \
-  test/versionbits_tests.cpp
+  	test/validation_block_tests.cpp \
+                             test/versionbits_tests.cpp
 
 if ENABLE_PROPERTY_TESTS
 POCKETCOIN_TESTS += \
@@ -120,12 +123,12 @@ endif
 test_test_pocketcoin_SOURCES = $(POCKETCOIN_TEST_SUITE) $(POCKETCOIN_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
 test_test_pocketcoin_CPPFLAGS = $(AM_CPPFLAGS) $(POCKETCOIN_INCLUDES) $(TESTDEFS) $(EVENT_CFLAGS)
 test_test_pocketcoin_LDADD =
-if ENABLE_WALLET
-test_test_pocketcoin_LDADD += $(LIBPOCKETCOIN_WALLET)
-endif
+#if ENABLE_WALLET
+#test_test_pocketcoin_LDADD += $(LIBPOCKETCOIN_WALLET)
+#endif
 
 test_test_pocketcoin_LDADD += $(LIBPOCKETCOIN_SERVER) $(LIBPOCKETCOIN_CLI) $(LIBPOCKETCOIN_COMMON) $(LIBPOCKETCOIN_UTIL) $(LIBPOCKETCOIN_CONSENSUS) $(LIBPOCKETCOIN_CRYPTO) $(LIBUNIVALUE) \
-  $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1) $(EVENT_LIBS) $(EVENT_PTHREADS_LIBS)
+  $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1) $(EVENT_LIBS) $(EVENT_PTHREADS_LIBS) $(LIBPOCKETCOIN_WALLET)
 test_test_pocketcoin_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 test_test_pocketcoin_LDADD += $(LIBPOCKETCOIN_CONSENSUS) $(BDB_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(RAPIDCHECK_LIBS)
@@ -152,7 +155,10 @@ test_test_pocketcoin_fuzzy_LDADD = \
   $(LIBPOCKETCOIN_CRYPTO_SSE41) \
   $(LIBPOCKETCOIN_CRYPTO_AVX2) \
   $(LIBPOCKETCOIN_CRYPTO_SHANI) \
-  $(LIBSECP256K1)
+  $(LIBSECP256K1) \
+  $(LIBSQLITE3) \
+  $(BOOST_LIBS)
+  # $(LIBPOCKETCOIN_WALLET)
 
 test_test_pocketcoin_fuzzy_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #

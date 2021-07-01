@@ -75,9 +75,9 @@ BOOST_AUTO_TEST_CASE(blockfilter_basic_test)
 
     CBlockUndo block_undo;
     block_undo.vtxundo.emplace_back();
-    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(500, included_scripts[3]), 1000, true, false);
-    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(600, included_scripts[4]), 10000, false, false);
-    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(700, excluded_scripts[2]), 100000, false, false);
+    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(500, included_scripts[3]), 1000, false, true, false);
+    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(600, included_scripts[4]), 10000, false, false, false);
+    block_undo.vtxundo.back().vprevout.emplace_back(CTxOut(700, excluded_scripts[2]), 100000, false, false, false);
 
     BlockFilter block_filter(BlockFilterType::BASIC, block, block_undo);
     const GCSFilter& filter = block_filter.GetFilter();
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(blockfilters_json_test)
             continue;
         }
 
-        unsigned int pos = 0;
+        unsigned int pos = 0; 
         /*int block_height =*/ test[pos++].get_int();
         /*uint256 block_hash =*/ ParseHashStr(test[pos++].get_str(), "block_hash");
 
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(blockfilters_json_test)
         for (unsigned int ii = 0; ii < prev_scripts.size(); ii++) {
             std::vector<unsigned char> raw_script = ParseHex(prev_scripts[ii].get_str());
             CTxOut txout(0, CScript(raw_script.begin(), raw_script.end()));
-            tx_undo.vprevout.emplace_back(txout, 0, false, false);
+            tx_undo.vprevout.emplace_back(txout, 0, false, false, false);
         }
 
         uint256 prev_filter_header_basic = ParseHashStr(test[pos++].get_str(), "prev_filter_header_basic");
